@@ -38,7 +38,6 @@ class LockableTest extends TestCase
         $model->save();
     }
 
-
     #[Test]
     public function it_sets_model_on_locked_exception_when_updating()
     {

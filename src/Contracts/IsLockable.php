@@ -4,7 +4,7 @@ namespace TestMonitor\Lockable\Contracts;
 
 /**
  * @mixin \Illuminate\Database\Eloquent\Model
-*/
+ */
 interface IsLockable
 {
     public function isLocked(): bool;
