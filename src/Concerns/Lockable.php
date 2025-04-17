@@ -10,7 +10,7 @@ trait Lockable
     public static function bootLockable()
     {
         static::saving(function (IsLockable $model) {
-            if ($model->exists && $model->isLocked() && !($model->isLocking() || $model->isUnlocking())) {
+            if ($model->exists && $model->isLocked() && ! ($model->isLocking() || $model->isUnlocking())) {
                 throw (new ModelLockedException)->setModel($model);
             }
         });
