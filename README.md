@@ -1,7 +1,8 @@
 # Eloquent Lockable
 
 [![Latest Stable Version](https://poser.pugx.org/testmonitor/eloquent-lockable/v/stable)](https://packagist.org/packages/testmonitor/eloquent-lockable)
-[![CircleCI](https://img.shields.io/circleci/project/github/testmonitor/eloquent-lockable.svg)](https://circleci.com/gh/testmonitor/eloquent-lockable)[![![codecov](https://codecov.io/gh/testmonitor/eloquent-lockable/graph/badge.svg?token=KOVD6QX7PD)](https://codecov.io/gh/testmonitor/eloquent-lockable)
+[![CircleCI](https://img.shields.io/circleci/project/github/testmonitor/eloquent-lockable.svg)](https://circleci.com/gh/testmonitor/eloquent-lockable)
+[![codecov](https://codecov.io/gh/testmonitor/eloquent-lockable/graph/badge.svg?token=KOVD6QX7PD)](https://codecov.io/gh/testmonitor/eloquent-lockable)
 [![StyleCI](https://styleci.io/repos/968120528/shield)](https://styleci.io/repos/968120528)
 [![License](https://poser.pugx.org/testmonitor/eloquent-lockable/license)](https://packagist.org/packages/eloquent-lockable)
 
