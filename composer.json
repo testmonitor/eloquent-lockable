@@ -1,0 +1,58 @@
+{
+    "name": "testmonitor/eloquent-lockable",
+    "description": "Make Eloquent models read-only after they're locked. Prevents updates and deletes based on a `locked` attribute.",
+    "type": "library",
+    "keywords": [
+        "testmonitor",
+        "lockable",
+        "eloquent",
+        "model",
+        "laravel"
+    ],
+    "authors": [
+        {
+            "name": "Thijs Kok",
+            "email": "tkok@testmonitor.com",
+            "homepage": "https://www.testmonitor.com/",
+            "role": "Lead Developer"
+        },
+        {
+            "name": "Stephan Grootveld",
+            "email": "sgrootveld@testmonitor.com",
+            "homepage": "https://www.testmonitor.com/",
+            "role": "Developer"
+        },
+        {
+            "name": "Frank Keulen",
+            "email": "fkeulen@testmonitor.com",
+            "homepage": "https://www.testmonitor.com/",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": "^8.2",
+        "illuminate/database": "^11.0|^12.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.0",
+        "friendsofphp/php-cs-fixer": "^3.7",
+        "squizlabs/php_codesniffer": "^3.6",
+        "orchestra/testbench": "^9.0|^10.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "TestMonitor\\Lockable\\": "src",
+            "TestMonitor\\Lockable\\Database\\Factories\\": "database/factories"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "TestMonitor\\Lockable\\Test\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    },
+    "license": "MIT"
+}
