@@ -1,11 +1,11 @@
-# Eloquent Lockabe
+# Eloquent Lockable
 
 [![Latest Stable Version](https://poser.pugx.org/testmonitor/eloquent-lockable/v/stable)](https://packagist.org/packages/testmonitor/eloquent-lockable)
-[![codecov](https://codecov.io/gh/testmonitor/eloquent-lockable/graph/badge.svg?token=EK8IWK6R9G)](https://codecov.io/gh/testmonitor/eloquent-lockable)
-[![StyleCI](https://styleci.io/repos/824909779/shield)](https://styleci.io/repos/824909779)
+[![CircleCI](https://img.shields.io/circleci/project/github/testmonitor/eloquent-lockable.svg)](https://circleci.com/gh/testmonitor/eloquent-lockable)[![![codecov](https://codecov.io/gh/testmonitor/eloquent-lockable/graph/badge.svg?token=KOVD6QX7PD)](https://codecov.io/gh/testmonitor/eloquent-lockable)
+[![StyleCI](https://styleci.io/repos/968120528/shield)](https://styleci.io/repos/968120528)
 [![License](https://poser.pugx.org/testmonitor/eloquent-lockable/license)](https://packagist.org/packages/eloquent-lockable)
 
-Make Eloquent models read-only after they're locked. Prevents updates and deletes based on a `locked` attribute. Comes with a trait and an optional interface for maximum clarity.
+Make Laravel Eloquent models read-only after they're locked. Prevents updates and deletes based on a "locked" attribute. Includes a trait and required interface to clearly define and enforce lockable models.
 
 ## Table of Contents
 
@@ -65,13 +65,13 @@ $invoice->isLocked();    // true or false
 
 ### Exceptions
 
-Trying to update or delete a locked model will throw a ModelIsLockedException.
+Trying to update or delete a locked model will throw a ModelLockedException.
 
 ```php
 try {
     $invoice->update(['amount' => 999]);
-} catch (ModelIsLockedException $e) {
-    $model = $e->getModel();
+} catch (ModelLockedException $exception) {
+    $model = $exception->getModel();
 }
 ```
 
