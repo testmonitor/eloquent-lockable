@@ -86,7 +86,7 @@ class LockableTest extends TestCase
         $this->assertTrue($model->fresh()->isLocked());
 
         $model->unlock();
-        $this->assertFalse($model->fresh()->isLocked());
+        $this->assertTrue($model->fresh()->isUnlocked());
     }
 
     #[Test]
