@@ -13,6 +13,8 @@ interface IsLockable
 
     public function setLocked(bool $state): self;
 
+    public function setUnlocked(): self;
+
     public function markLocked(): self;
 
     public function markUnlocked(): self;

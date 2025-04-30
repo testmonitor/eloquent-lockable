@@ -47,11 +47,16 @@ trait Lockable
         return $this->isDirty($this->getLockColumn()) && $this->getAttribute($this->getLockColumn()) === false;
     }
 
-    public function setLocked(bool $state): self
+    public function setLocked(bool $state = true): self
     {
         $this->setAttribute($this->getLockColumn(), $state);
 
         return $this;
+    }
+
+    public function setUnlocked(): self
+    {
+        return $this->setLocked(false);
     }
 
     public function markLocked(): self
@@ -63,7 +68,7 @@ trait Lockable
 
     public function markUnlocked(): self
     {
-        $this->setLocked(false)->save();
+        $this->setUnlocked()->save();
 
         return $this;
     }
