@@ -47,30 +47,40 @@ trait Lockable
         return $this->isDirty($this->getLockColumn()) && $this->getAttribute($this->getLockColumn()) === false;
     }
 
-    public function lock(): self
+    public function setLocked(bool $state = true): self
     {
-        $this->{$this->getLockColumn()} = true;
-        $this->save();
+        $this->setAttribute($this->getLockColumn(), $state);
 
         return $this;
     }
 
-    public function unlock(): self
+    public function setUnlocked(): self
     {
-        $this->{$this->getLockColumn()} = false;
-        $this->save();
+        return $this->setLocked(false);
+    }
+
+    public function markLocked(): self
+    {
+        $this->setLocked(true)->save();
+
+        return $this;
+    }
+
+    public function markUnlocked(): self
+    {
+        $this->setUnlocked()->save();
 
         return $this;
     }
 
     public function whileLocked(callable $callback): self
     {
-        $this->lock();
+        $this->markLocked();
 
         try {
             $callback($this);
         } finally {
-            $this->unlock();
+            $this->markUnlocked();
         }
 
         return $this;
@@ -78,12 +88,12 @@ trait Lockable
 
     public function whileUnlocked(callable $callback): self
     {
-        $this->unlock();
+        $this->markUnlocked();
 
         try {
             $callback($this);
         } finally {
-            $this->lock();
+            $this->markLocked();
         }
 
         return $this;

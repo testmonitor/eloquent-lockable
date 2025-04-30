@@ -82,10 +82,10 @@ class LockableTest extends TestCase
     {
         $model = User::create(['name' => 'Lock and Unlock Me', 'locked' => false]);
 
-        $model->lock();
+        $model->markLocked();
         $this->assertTrue($model->fresh()->isLocked());
 
-        $model->unlock();
+        $model->markUnlocked();
         $this->assertTrue($model->fresh()->isUnlocked());
     }
 
