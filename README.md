@@ -58,8 +58,8 @@ That's it!
 Now you can start locking and unlocking models:
 
 ```php
-$invoice->lock();
-$invoice->unlock();
+$invoice->markLocked();
+$invoice->markUnlocked();
 
 $invoice->isLocked();    // true or false
 ```

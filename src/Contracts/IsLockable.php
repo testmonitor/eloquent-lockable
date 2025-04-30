@@ -11,9 +11,11 @@ interface IsLockable
 
     public function isUnlocked(): bool;
 
-    public function lock(): self;
+    public function setLocked(bool $state): self;
 
-    public function unlock(): self;
+    public function markLocked(): self;
+
+    public function markUnlocked(): self;
 
     public function whileLocked(callable $callback): self;
 
