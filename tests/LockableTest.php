@@ -4,6 +4,7 @@ namespace TestMonitor\Lockable\Test;
 
 use PHPUnit\Framework\Attributes\Test;
 use TestMonitor\Lockable\Test\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use TestMonitor\Lockable\Test\Models\SoftDeletableUser;
 use TestMonitor\Lockable\Exceptions\ModelLockedException;
 use TestMonitor\Lockable\Test\Models\DeletableWhenLockedUser;
@@ -148,5 +149,34 @@ class LockableTest extends TestCase
 
         $this->assertEquals('Temporarily Unlocked', $model->fresh()->name);
         $this->assertTrue($model->fresh()->isLocked());
+    }
+
+    #[Test]
+    public function it_can_filter_out_locked_models_using_the_locked_scope()
+    {
+        User::create(['name' => 'Locked #1', 'locked' => true]);
+        User::create(['name' => 'Locked #2', 'locked' => true]);
+        User::create(['name' => 'Unlocked #1', 'locked' => false]);
+
+        $results = User::query()->locked()->get();
+
+        $this->assertInstanceOf(Collection::class, $results);
+        $this->assertEquals(2, $results->count());
+        $this->assertEquals('Locked #1', $results->first()->name);
+        $this->assertEquals('Locked #2', $results->last()->name);
+    }
+
+    #[Test]
+    public function it_can_filter_out_unlocked_models_using_the_unlocked_scope()
+    {
+        User::create(['name' => 'Locked #1', 'locked' => true]);
+        User::create(['name' => 'Locked #2', 'locked' => true]);
+        User::create(['name' => 'Unlocked #1', 'locked' => false]);
+
+        $results = User::query()->unlocked()->get();
+
+        $this->assertInstanceOf(Collection::class, $results);
+        $this->assertEquals(1, $results->count());
+        $this->assertEquals('Unlocked #1', $results->first()->name);
     }
 }

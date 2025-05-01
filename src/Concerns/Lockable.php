@@ -3,6 +3,7 @@
 namespace TestMonitor\Lockable\Concerns;
 
 use TestMonitor\Lockable\Contracts\IsLockable;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use TestMonitor\Lockable\Exceptions\ModelLockedException;
 
 trait Lockable
@@ -102,5 +103,15 @@ trait Lockable
         }
 
         return $this;
+    }
+
+    public function scopeLocked(Builder $query): Builder
+    {
+        return $query->where($this->getLockColumn(), true);
+    }
+
+    public function scopeUnlocked(Builder $query): Builder
+    {
+        return $query->where($this->getLockColumn(), false);
     }
 }
