@@ -16,7 +16,7 @@ trait Lockable
         });
 
         static::deleting(function (IsLockable $model) {
-            if ($model->isLocked() && !$model->canDeleteWhenLocked()) {
+            if ($model->isLocked() && ! $model->canDeleteWhenLocked()) {
                 throw (new ModelLockedException)->setModel($model);
             }
         });

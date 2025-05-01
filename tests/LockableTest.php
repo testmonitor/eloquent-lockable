@@ -4,9 +4,9 @@ namespace TestMonitor\Lockable\Test;
 
 use PHPUnit\Framework\Attributes\Test;
 use TestMonitor\Lockable\Test\Models\User;
+use TestMonitor\Lockable\Test\Models\SoftDeletableUser;
 use TestMonitor\Lockable\Exceptions\ModelLockedException;
 use TestMonitor\Lockable\Test\Models\DeletableWhenLockedUser;
-use TestMonitor\Lockable\Test\Models\SoftDeletableUser;
 use TestMonitor\Lockable\Test\Models\SoftDeletableWhenLockedUser;
 
 class LockableTest extends TestCase
