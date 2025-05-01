@@ -92,6 +92,17 @@ $invoice->whileUnlocked(function ($model) {
 
 These automatically restore the original lock state — even if an exception is thrown.
 
+### Retrieving Locked and Unlocked Models
+
+Convenient query scopes are provided to filter locked and unlocked models:
+
+```php
+Invoice::locked()->get();
+Invoice::unlocked()->get();
+```
+
+These are local scopes and can be used just like any other Eloquent scope.
+
 ### Configurable Lock Column
 
 Want to use a different column like archived or readonly?
