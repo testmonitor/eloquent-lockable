@@ -5,6 +5,9 @@ namespace TestMonitor\Lockable\Test;
 use PHPUnit\Framework\Attributes\Test;
 use TestMonitor\Lockable\Test\Models\User;
 use TestMonitor\Lockable\Exceptions\ModelLockedException;
+use TestMonitor\Lockable\Test\Models\DeletableWhenLockedUser;
+use TestMonitor\Lockable\Test\Models\SoftDeletableUser;
+use TestMonitor\Lockable\Test\Models\SoftDeletableWhenLockedUser;
 
 class LockableTest extends TestCase
 {
@@ -61,6 +64,36 @@ class LockableTest extends TestCase
         $this->expectException(ModelLockedException::class);
 
         $model->delete();
+    }
+
+    #[Test]
+    public function it_blocks_soft_deleting_when_locked()
+    {
+        $model = SoftDeletableUser::create(['name' => 'Lock Me Softly', 'locked' => true]);
+
+        $this->expectException(ModelLockedException::class);
+
+        $model->delete();
+    }
+
+    #[Test]
+    public function it_allows_deleting_when_locked_but_deletion_is_allowed()
+    {
+        $model = DeletableWhenLockedUser::create(['name' => 'Delete Me', 'locked' => true]);
+
+        $model->delete();
+
+        $this->assertDatabaseMissing('users', ['id' => $model->id]);
+    }
+
+    #[Test]
+    public function it_allows_soft_deleting_when_locked_but_deletion_is_allowed()
+    {
+        $model = SoftDeletableWhenLockedUser::create(['name' => 'Delete Me Softly', 'locked' => true]);
+
+        $model->delete();
+
+        $this->assertSoftDeleted($model);
     }
 
     #[Test]

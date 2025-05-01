@@ -13,7 +13,5 @@ class User extends Model implements IsLockable
 
     protected $table = 'users';
 
-    public $timestamps = false;
-
     protected $guarded = [];
 }

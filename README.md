@@ -105,6 +105,17 @@ public function getLockColumn(): string
 }
 ```
 
+### Allow Deletion of Locked Models
+
+If you want to allow deletion of locked models, override the canDeleteWhenLocked() method in your model:
+
+```php
+public function canDeleteWhenLocked(): bool
+{
+    return true;
+}
+```
+
 ## Tests
 
 The package contains integration tests. You can run them using PHPUnit.

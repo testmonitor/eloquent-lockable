@@ -36,6 +36,8 @@ abstract class TestCase extends OrchestraTestCase
             $table->increments('id');
             $table->string('name');
             $table->boolean('locked')->default(false);
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 }
