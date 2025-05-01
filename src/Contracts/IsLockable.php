@@ -23,5 +23,7 @@ interface IsLockable
 
     public function whileUnlocked(callable $callback): self;
 
+    public function canDeleteWhenLocked(): bool;
+
     public function getLockColumn(): string;
 }

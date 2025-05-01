@@ -16,10 +16,15 @@ trait Lockable
         });
 
         static::deleting(function (IsLockable $model) {
-            if ($model->isLocked()) {
+            if ($model->isLocked() && ! $model->canDeleteWhenLocked()) {
                 throw (new ModelLockedException)->setModel($model);
             }
         });
+    }
+
+    public function canDeleteWhenLocked(): bool
+    {
+        return false;
     }
 
     public function getLockColumn(): string
