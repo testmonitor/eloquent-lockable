@@ -23,7 +23,7 @@ class ModelLockedException extends RuntimeException
     {
         $this->model = $model;
 
-        $this->message = "[{$model}] is locked and cannot be modified or deleted ({$model->getKey()})";
+        $this->message = "[" . get_class($model) . "] is locked and cannot be modified or deleted ({$model->getKey()})";
 
         return $this;
     }
