@@ -14,9 +14,4 @@ class User extends Model implements IsLockable
     protected $table = 'users';
 
     protected $guarded = [];
-
-    public function getLockExceptions(): array
-    {
-        return ['note'];
-    }
 }
