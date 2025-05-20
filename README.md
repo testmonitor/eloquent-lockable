@@ -129,12 +129,12 @@ public function canDeleteWhenLocked(): bool
 
 ### Allow Modifying Specific Attributes While Locked
 
-Sometimes want to allow certain attributes to be changed. To do this, override the getLockExceptions() method in your model:
+Sometimes, you may want to allow certain attributes to be changed. To do this, override the getLockExceptions() method in your model:
 
 ```php
 public function getLockExceptions(): array
 {
-    return ['internal_note'];
+    return ['note'];
 }
 ```
 
