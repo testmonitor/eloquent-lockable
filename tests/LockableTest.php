@@ -98,6 +98,17 @@ class LockableTest extends TestCase
     }
 
     #[Test]
+    public function it_allows_saving_when_locked_but_attribute_is_on_exception_list()
+    {
+        $model = User::create(['name' => 'Change Me', 'locked' => true]);
+
+        $model->note = 'Some note';
+        $model->save();
+
+        $this->assertEquals('Some note', $model->note);
+    }
+
+    #[Test]
     public function it_sets_model_on_locked_exception_when_deleting()
     {
         $model = User::create(['name' => 'Lock Me', 'locked' => true]);

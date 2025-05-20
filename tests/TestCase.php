@@ -35,6 +35,7 @@ abstract class TestCase extends OrchestraTestCase
         $builder->create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('note')->nullable();
             $table->boolean('locked')->default(false);
             $table->timestamps();
             $table->softDeletes();

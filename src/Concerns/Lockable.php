@@ -11,7 +11,7 @@ trait Lockable
     public static function bootLockable()
     {
         static::saving(function (IsLockable $model) {
-            if ($model->exists && $model->isLocked() && ! ($model->isLocking() || $model->isUnlocking())) {
+            if ($model->exists && $model->isLocked() && ! $model->canSaveWhileLocked()) {
                 throw (new ModelLockedException)->setModel($model);
             }
         });
@@ -28,9 +28,27 @@ trait Lockable
         return false;
     }
 
+    public function canSaveWhileLocked(): bool
+    {
+        return empty($this->dirtyWithoutLockExceptions()) || $this->isLocking() || $this->isUnlocking();
+    }
+
+    protected function dirtyWithoutLockExceptions(): array
+    {
+        $dirty = $this->getDirty();
+        $exceptions = array_flip($this->getLockExceptions());
+
+        return array_diff_key($dirty, $exceptions);
+    }
+
     public function getLockColumn(): string
     {
         return 'locked';
+    }
+
+    public function getLockExceptions(): array
+    {
+        return [];
     }
 
     public function isLocked(): bool
