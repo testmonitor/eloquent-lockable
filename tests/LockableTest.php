@@ -7,6 +7,7 @@ use TestMonitor\Lockable\Test\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use TestMonitor\Lockable\Test\Models\SoftDeletableUser;
 use TestMonitor\Lockable\Exceptions\ModelLockedException;
+use TestMonitor\Lockable\Test\Models\UserWithLockExceptions;
 use TestMonitor\Lockable\Test\Models\DeletableWhenLockedUser;
 use TestMonitor\Lockable\Test\Models\SoftDeletableWhenLockedUser;
 
@@ -95,6 +96,17 @@ class LockableTest extends TestCase
         $model->delete();
 
         $this->assertSoftDeleted($model);
+    }
+
+    #[Test]
+    public function it_allows_saving_when_locked_but_attribute_is_on_exception_list()
+    {
+        $model = UserWithLockExceptions::create(['name' => 'Change Me', 'locked' => true]);
+
+        $model->note = 'Some note';
+        $model->save();
+
+        $this->assertEquals('Some note', $model->note);
     }
 
     #[Test]
