@@ -99,6 +99,17 @@ class LockableTest extends TestCase
     }
 
     #[Test]
+    public function it_allows_restoring_when_locked_but_deletion_is_allowed()
+    {
+        $model = SoftDeletableWhenLockedUser::create(['name' => 'Restore Me Again', 'locked' => true]);
+        $model->delete();
+
+        $model->restore();
+
+        $this->assertNotSoftDeleted($model);
+    }
+
+    #[Test]
     public function it_allows_saving_when_locked_but_attribute_is_on_exception_list()
     {
         $model = UserWithLockExceptions::create(['name' => 'Change Me', 'locked' => true]);

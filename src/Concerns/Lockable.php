@@ -2,6 +2,7 @@
 
 namespace TestMonitor\Lockable\Concerns;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use TestMonitor\Lockable\Contracts\IsLockable;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use TestMonitor\Lockable\Exceptions\ModelLockedException;
@@ -28,9 +29,17 @@ trait Lockable
         return false;
     }
 
+    public function canRestoreWhileLocked(): bool
+    {
+        return $this->canDeleteWhenLocked();
+    }
+
     public function canSaveWhileLocked(): bool
     {
-        return empty($this->dirtyWithoutLockExceptions()) || $this->isLocking() || $this->isUnlocking();
+        return empty($this->dirtyWithoutLockExceptions()) ||
+            $this->isLocking() ||
+            $this->isUnlocking() ||
+            ($this->isRestoringWhileLocked() && $this->canRestoreWhileLocked());
     }
 
     protected function dirtyWithoutLockExceptions(): array
@@ -61,7 +70,7 @@ trait Lockable
         return ! $this->isLocked();
     }
 
-    protected function islocking(): bool
+    protected function isLocking(): bool
     {
         return $this->isDirty($this->getLockColumn()) && $this->getAttribute($this->getLockColumn()) === true;
     }
@@ -69,6 +78,19 @@ trait Lockable
     protected function isUnlocking(): bool
     {
         return $this->isDirty($this->getLockColumn()) && $this->getAttribute($this->getLockColumn()) === false;
+    }
+
+    protected function isLockableAndSoftDeletable(): bool
+    {
+        return in_array(SoftDeletes::class, class_uses_recursive(get_class($this))) &&
+            method_exists($this, 'getDeletedAtColumn');
+    }
+
+    protected function isRestoringWhileLocked(): bool
+    {
+        return $this->isLocked() &&
+            $this->isLockableAndSoftDeletable() &&
+            $this->getDirty() === [$this->getDeletedAtColumn() => null];
     }
 
     public function setLocked(bool $state = true): self
