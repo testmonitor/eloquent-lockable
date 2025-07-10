@@ -25,6 +25,8 @@ interface IsLockable
 
     public function canDeleteWhenLocked(): bool;
 
+    public function canRestoreWhileLocked(): bool;
+
     public function getLockColumn(): string;
 
     public function getLockExceptions(): array;
