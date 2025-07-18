@@ -41,7 +41,7 @@ jobs:
                   name: PHPCS
                   command: |
                       mkdir -p ./logs/phpcs
-                      vendor/bin/phpcs --standard="PSR1,PSR2" -v --report=junit --report-file=logs/phpcs/junit.xml src/
+                      vendor/bin/phpcs -v --report=junit --report-file=logs/phpcs/junit.xml src/
 
             - store_artifacts:
                   path: ./logs/phpcsfixer
