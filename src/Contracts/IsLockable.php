@@ -25,7 +25,6 @@ interface IsLockable
      * Set the lock state of the model.
      *
      * @param bool $state
-     *
      * @return self
      */
     public function setLocked(bool $state): self;
