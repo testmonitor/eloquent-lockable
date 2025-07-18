@@ -55,7 +55,6 @@ interface IsLockable
      * Execute a callback while the model is locked.
      *
      * @param callable $callback
-     *
      * @return self
      */
     public function whileLocked(callable $callback): self;
@@ -64,7 +63,6 @@ interface IsLockable
      * Execute a callback while the model is unlocked.
      *
      * @param callable $callback
-     *
      * @return self
      */
     public function whileUnlocked(callable $callback): self;

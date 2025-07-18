@@ -211,7 +211,6 @@ trait Lockable
      * Execute a callback while the model is locked.
      *
      * @param callable $callback
-     *
      * @return self
      */
     public function whileLocked(callable $callback): self
@@ -231,7 +230,6 @@ trait Lockable
      * Execute a callback while the model is unlocked.
      *
      * @param callable $callback
-     *
      * @return self
      */
     public function whileUnlocked(callable $callback): self
@@ -251,7 +249,6 @@ trait Lockable
      * Scope a query to only include locked models.
      *
      * @param \Illuminate\Contracts\Database\Eloquent\Builder $query
-     *
      * @return \Illuminate\Contracts\Database\Eloquent\Builder
      */
     public function scopeLocked(Builder $query): Builder
@@ -263,7 +260,6 @@ trait Lockable
      * Scope a query to only include unlocked models.
      *
      * @param \Illuminate\Contracts\Database\Eloquent\Builder $query
-     *
      * @return \Illuminate\Contracts\Database\Eloquent\Builder
      */
     public function scopeUnlocked(Builder $query): Builder
