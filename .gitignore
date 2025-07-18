@@ -1,12 +1,23 @@
+# Build artifacts
+build/
+
+# Composer
+/vendor
 composer.lock
-vendor
-build
 
-.idea/
-.idea_modules/
-
-.DS_Store
-
-.phpunit.result.cache
+# Tests and related files
+coverage/
+logs/
 .phpunit.cache
-/.php-cs-fixer.cache
+.phpunit.result.cache
+
+# IDE
+/.idea
+/.vscode
+
+# Code Styling / Linting
+.php_cs.cache
+.php-cs-fixer.cache
+
+# OS
+.DS_Store
