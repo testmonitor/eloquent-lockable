@@ -2,10 +2,11 @@
 <ruleset name="PHP_CodeSniffer">
     <description>The coding standard for PHP_CodeSniffer itself.</description>
 
-    <!--<file>app</file>-->
+    <file>src</file>
 
-    <exclude-pattern>*/Standards/*/Tests/*.(inc|css|js)</exclude-pattern>
+    <exclude-pattern>*/tests/*</exclude-pattern>
 
+    <arg name="extensions" value="php" />
     <arg name="basepath" value="."/>
     <arg name="colors" />
     <arg name="parallel" value="75" />
@@ -16,74 +17,97 @@
         <type>error</type>
     </rule>
 
-    <!-- Include the whole PSR1 standard -->
-    <rule ref="PSR1"/>
+    <!-- Include the whole PSR12 standard (includes PSR1 and PSR2) -->
+    <rule ref="PSR12"/>
 
-    <!-- Include the whole PSR2 standard -->
-    <rule ref="PSR2"/>
-
-    <!-- Include the PEAR standard, with a few exceptions -->
-    <rule ref="PEAR">
-        <exclude name="PEAR.Commenting.ClassComment" />
-        <exclude name="PEAR.Commenting.FileComment" />
+    <!-- Cherry-pick PEAR sniffs instead of including the entire standard -->
+    <rule ref="PEAR.Commenting.FunctionComment">
         <exclude name="PEAR.Commenting.FunctionComment.MissingReturn" />
         <exclude name="PEAR.Commenting.FunctionComment.MissingParamTag" />
         <exclude name="PEAR.Commenting.FunctionComment.MissingParamComment" />
         <exclude name="PEAR.Commenting.FunctionComment.SpacingAfterParamType" />
         <exclude name="PEAR.Commenting.FunctionComment.SpacingAfterParamName" />
-        <exclude name="PEAR.Files.IncludingFile" />
-        <exclude name="PEAR.Functions.FunctionCallSignature" />
-        <exclude name="PEAR.NamingConventions.ValidFunctionName" />
-        <exclude name="PEAR.NamingConventions.ValidVariableName" />
-        <exclude name="PEAR.WhiteSpace.ObjectOperatorIndent" />
     </rule>
 
-    <!-- Include some sniffs from other standards that don't conflict with PEAR -->
+    <!-- Squiz sniffs -->
+    <rule ref="Squiz.Arrays.ArrayBracketSpacing"/>
+
+    <rule ref="Squiz.Commenting.BlockComment">
+        <exclude name="Squiz.Commenting.BlockComment.LineIndent" />
+        <exclude name="Squiz.Commenting.BlockComment.FirstLineIndent" />
+        <exclude name="Squiz.Commenting.BlockComment.WrongStart" />
+    </rule>
     <rule ref="Squiz.Commenting.DocCommentAlignment" />
     <rule ref="Squiz.Commenting.EmptyCatchComment" />
     <rule ref="Squiz.Commenting.PostStatementComment" />
-    <rule ref="Squiz.Commenting.VariableComment" />
-    <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing" />
 
+    <rule ref="Squiz.Formatting.OperatorBracket">
+        <exclude name="Squiz.Formatting.OperatorBracket.MissingBrackets" />
+    </rule>
+
+    <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing" />
+    <rule ref="Squiz.Functions.MultiLineFunctionDeclaration">
+        <exclude name="Squiz.Functions.MultiLineFunctionDeclaration.FirstParamSpacing" />
+        <exclude name="Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine" />
+    </rule>
+
+    <rule ref="Squiz.NamingConventions.ValidVariableName">
+        <exclude name="Squiz.NamingConventions.ValidVariableName.NotCamelCaps"/>
+    </rule>
+
+    <rule ref="Squiz.WhiteSpace.ScopeClosingBrace">
+        <exclude name="Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore" />
+    </rule>
+
+    <!-- Generic sniffs -->
     <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
     <rule ref="Generic.Commenting.Todo"/>
+    <rule ref="Generic.ControlStructures.DisallowYodaConditions"/>
     <rule ref="Generic.ControlStructures.InlineControlStructure"/>
     <rule ref="Generic.Formatting.DisallowMultipleStatements"/>
     <rule ref="Generic.Formatting.SpaceAfterCast"/>
     <rule ref="Generic.NamingConventions.ConstructorName"/>
     <rule ref="Generic.PHP.DeprecatedFunctions"/>
     <rule ref="Generic.PHP.LowerCaseKeyword"/>
-    <rule ref="Generic.Strings.UnnecessaryStringConcat"/>
+    <rule ref="Generic.WhiteSpace.IncrementDecrementSpacing"/>
 
-    <rule ref="Zend.Files.ClosingTag"/>
-
-    <!-- Check var names, but we don't want leading underscores for private vars -->
-    <rule ref="Squiz.Commenting.BlockComment">
-        <exclude name="Squiz.Commenting.BlockComment.LineIndent" />
-        <exclude name="Squiz.Commenting.BlockComment.FirstLineIndent" />
-    </rule>
-
-    <rule ref="Squiz.Formatting.OperatorBracket">
-        <exclude name="Squiz.Formatting.OperatorBracket.MissingBrackets" />
-    </rule>
-
-    <!-- Check var names, but we don't want leading underscores for private vars -->
-    <rule ref="Squiz.NamingConventions.ValidVariableName">
-        <exclude name="Squiz.NamingConventions.ValidVariableName.NotCamelCaps"/>
-    </rule>
-
-    <!-- Only one argument per line in multi-line function calls -->
-    <rule ref="PEAR.Functions.FunctionCallSignature">
+    <!-- Prevent the use of debugging methods in live code -->
+    <rule ref="Generic.PHP.ForbiddenFunctions">
         <properties>
-            <property name="allowMultipleArguments" value="false"/>
+            <property name="forbiddenFunctions" type="array">
+                <element key="clock" value="null"/>
+                <element key="dd" value="null"/>
+                <element key="dump" value="null"/>
+                <element key="print_r" value="null"/>
+                <element key="var_dump" value="null"/>
+            </property>
         </properties>
     </rule>
 
-    <!-- Only one argument per line in multi-line function calls -->
+    <!-- Relax commenting rules -->
     <rule ref="Generic.Commenting.DocComment">
+        <exclude name="Generic.Commenting.DocComment.ContentAfterOpen" />
+        <exclude name="Generic.Commenting.DocComment.ContentBeforeClose" />
         <exclude name="Generic.Commenting.DocComment.TagValueIndent" />
         <exclude name="Generic.Commenting.DocComment.MissingShort"/>
         <exclude name="Generic.Commenting.DocComment.NonParamGroup" />
     </rule>
 
+    <!-- PSR12 rule adjustments -->
+    <rule ref="PSR2.Methods.FunctionCallSignature">
+        <exclude name="PSR2.Methods.FunctionCallSignature.MultipleArguments" />
+    </rule>
+    <rule ref="PSR2.Namespaces.UseDeclaration">
+        <exclude name="PSR2.Namespaces.UseDeclaration.MultipleDeclarations" />
+    </rule>
+    <rule ref="PSR12.Classes.ClassInstantiation">
+        <exclude name="PSR12.Classes.ClassInstantiation.MissingParentheses" />
+    </rule>
+    <rule ref="PSR12.Operators.OperatorSpacing">
+        <exclude name="PSR12.Operators.OperatorSpacing.NoSpaceAfter" />
+        <exclude name="PSR12.Operators.OperatorSpacing.NoSpaceBefore" />
+    </rule>
+    <rule ref="PSR12.Traits.UseDeclaration">
+        <exclude name="PSR12.Traits.UseDeclaration.MultipleImport" />
+    </rule>
 </ruleset>
