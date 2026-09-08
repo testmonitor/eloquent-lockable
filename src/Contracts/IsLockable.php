@@ -71,6 +71,8 @@ interface IsLockable
 
     /**
      * Get the exceptions that should not trigger a lock exception.
+     *
+     * @return list<string>
      */
     public function getLockExceptions(): array;
 }
