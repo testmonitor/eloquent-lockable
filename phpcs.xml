@@ -2,7 +2,7 @@
 <ruleset name="PHP_CodeSniffer">
     <description>The coding standard for PHP_CodeSniffer itself.</description>
 
-    <!--<file>app</file>-->
+    <file>src</file>
 
     <exclude-pattern>*/Standards/*/Tests/*.(inc|css|js)</exclude-pattern>
 
