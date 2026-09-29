@@ -47,6 +47,11 @@ jobs:
           command: |
             mkdir -p ./logs/rector
             vendor/bin/rector process --dry-run --no-ansi --no-progress-bar --rules-summary > logs/rector/rector.log
+      - run:
+          name: PHPStan
+          command: |
+            mkdir -p ./logs/phpstan
+            vendor/bin/phpstan analyse --memory-limit=1G --no-progress --error-format=junit > logs/phpstan/junit.xml
 
       - store_artifacts:
           path: ./logs/pint
@@ -57,6 +62,9 @@ jobs:
       - store_artifacts:
           path: ./logs/rector
           destination: rector
+      - store_artifacts:
+          path: ./logs/phpstan
+          destination: phpstan
       - store_test_results:
           path: ./logs
 
@@ -79,7 +87,7 @@ jobs:
           name: Run Unit Tests
           command: |
             mkdir -p ./logs/phpunit
-            vendor/bin/phpunit -d memory_limit=1G --coverage-clover logs/phpunit/coverage.xml --log-junit logs/phpunit/junit.xml --testdox-html logs/phpunit/testdox.html
+            vendor/bin/phpunit -d memory_limit=1G --coverage-clover coverage.xml --log-junit logs/phpunit/junit.xml --testdox-html logs/phpunit/testdox.html
       - store_artifacts:
           path: ./logs/phpunit
           destination: phpunit
@@ -87,11 +95,8 @@ jobs:
           path: ./logs
       - codecov/upload:
           report_type: coverage
-          disable_search: true
-          files: logs/phpunit/coverage.xml
       - codecov/upload:
           report_type: test_results
-          disable_search: true
           files: logs/phpunit/junit.xml
 
 workflows:
