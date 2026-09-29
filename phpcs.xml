@@ -1,113 +1,18 @@
 <?xml version="1.0"?>
-<ruleset name="PHP_CodeSniffer">
-    <description>The coding standard for PHP_CodeSniffer itself.</description>
+<ruleset name="eloquent-lockable">
+    <file>src/</file>
 
-    <file>src</file>
-
-    <exclude-pattern>*/tests/*</exclude-pattern>
-
-    <arg name="extensions" value="php" />
     <arg name="basepath" value="."/>
-    <arg name="colors" />
-    <arg name="parallel" value="75" />
-    <arg value="np"/>
+    <arg name="colors"/>
+    <arg name="parallel" value="75"/>
 
-    <!-- Don't hide tokenizer exceptions -->
-    <rule ref="Internal.Tokenizer.Exception">
-        <type>error</type>
-    </rule>
-
-    <!-- Include the whole PSR12 standard (includes PSR1 and PSR2) -->
-    <rule ref="PSR12"/>
-
-    <!-- Cherry-pick PEAR sniffs instead of including the entire standard -->
-    <rule ref="PEAR.Commenting.FunctionComment">
-        <exclude name="PEAR.Commenting.FunctionComment.MissingReturn" />
-        <exclude name="PEAR.Commenting.FunctionComment.MissingParamTag" />
-        <exclude name="PEAR.Commenting.FunctionComment.MissingParamComment" />
-        <exclude name="PEAR.Commenting.FunctionComment.SpacingAfterParamType" />
-        <exclude name="PEAR.Commenting.FunctionComment.SpacingAfterParamName" />
-    </rule>
-
-    <!-- Squiz sniffs -->
-    <rule ref="Squiz.Arrays.ArrayBracketSpacing"/>
-
-    <rule ref="Squiz.Commenting.BlockComment">
-        <exclude name="Squiz.Commenting.BlockComment.LineIndent" />
-        <exclude name="Squiz.Commenting.BlockComment.FirstLineIndent" />
-        <exclude name="Squiz.Commenting.BlockComment.WrongStart" />
-    </rule>
-    <rule ref="Squiz.Commenting.DocCommentAlignment" />
-    <rule ref="Squiz.Commenting.EmptyCatchComment" />
-    <rule ref="Squiz.Commenting.PostStatementComment" />
-
-    <rule ref="Squiz.Formatting.OperatorBracket">
-        <exclude name="Squiz.Formatting.OperatorBracket.MissingBrackets" />
-    </rule>
-
-    <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing" />
-    <rule ref="Squiz.Functions.MultiLineFunctionDeclaration">
-        <exclude name="Squiz.Functions.MultiLineFunctionDeclaration.FirstParamSpacing" />
-        <exclude name="Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine" />
-    </rule>
-
-    <rule ref="Squiz.NamingConventions.ValidVariableName">
-        <exclude name="Squiz.NamingConventions.ValidVariableName.NotCamelCaps"/>
-    </rule>
-
-    <rule ref="Squiz.WhiteSpace.ScopeClosingBrace">
-        <exclude name="Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore" />
-    </rule>
-
-    <!-- Generic sniffs -->
-    <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
-    <rule ref="Generic.Commenting.Todo"/>
-    <rule ref="Generic.ControlStructures.DisallowYodaConditions"/>
-    <rule ref="Generic.ControlStructures.InlineControlStructure"/>
-    <rule ref="Generic.Formatting.DisallowMultipleStatements"/>
-    <rule ref="Generic.Formatting.SpaceAfterCast"/>
-    <rule ref="Generic.NamingConventions.ConstructorName"/>
-    <rule ref="Generic.PHP.DeprecatedFunctions"/>
-    <rule ref="Generic.PHP.LowerCaseKeyword"/>
-    <rule ref="Generic.WhiteSpace.IncrementDecrementSpacing"/>
-
-    <!-- Prevent the use of debugging methods in live code -->
-    <rule ref="Generic.PHP.ForbiddenFunctions">
-        <properties>
-            <property name="forbiddenFunctions" type="array">
-                <element key="clock" value="null"/>
-                <element key="dd" value="null"/>
-                <element key="dump" value="null"/>
-                <element key="print_r" value="null"/>
-                <element key="var_dump" value="null"/>
-            </property>
-        </properties>
-    </rule>
-
-    <!-- Relax commenting rules -->
-    <rule ref="Generic.Commenting.DocComment">
-        <exclude name="Generic.Commenting.DocComment.ContentAfterOpen" />
-        <exclude name="Generic.Commenting.DocComment.ContentBeforeClose" />
-        <exclude name="Generic.Commenting.DocComment.TagValueIndent" />
-        <exclude name="Generic.Commenting.DocComment.MissingShort"/>
-        <exclude name="Generic.Commenting.DocComment.NonParamGroup" />
-    </rule>
-
-    <!-- PSR12 rule adjustments -->
-    <rule ref="PSR2.Methods.FunctionCallSignature">
-        <exclude name="PSR2.Methods.FunctionCallSignature.MultipleArguments" />
-    </rule>
-    <rule ref="PSR2.Namespaces.UseDeclaration">
-        <exclude name="PSR2.Namespaces.UseDeclaration.MultipleDeclarations" />
-    </rule>
-    <rule ref="PSR12.Classes.ClassInstantiation">
-        <exclude name="PSR12.Classes.ClassInstantiation.MissingParentheses" />
-    </rule>
-    <rule ref="PSR12.Operators.OperatorSpacing">
-        <exclude name="PSR12.Operators.OperatorSpacing.NoSpaceAfter" />
-        <exclude name="PSR12.Operators.OperatorSpacing.NoSpaceBefore" />
-    </rule>
-    <rule ref="PSR12.Traits.UseDeclaration">
-        <exclude name="PSR12.Traits.UseDeclaration.MultipleImport" />
+    <rule ref="PSR12">
+        <!-- Allow new ClassName without parentheses -->
+        <exclude name="PSR12.Classes.ClassInstantiation.MissingParentheses"/>
+        <!-- Allow empty constructor body on one line: public function __construct(...) {} -->
+        <exclude name="Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine"/>
+        <exclude name="Squiz.WhiteSpace.ScopeClosingBrace.ContentBefore"/>
+        <!-- Allow multiple arguments per line in a multi-line function call -->
+        <exclude name="PSR2.Methods.FunctionCallSignature.MultipleArguments"/>
     </rule>
 </ruleset>
