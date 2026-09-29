@@ -9,9 +9,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Support for Laravel 13.0
 - Support for PHPUnit 13.0
 
-### Updated
-- Dropped support for anything before PHP 8.4
-- Dropped support for anything before Laravel 12.0
+### Removed
+- Support for PHP versions below 8.4
+- Support for Laravel versions below 12.0
 
 ## [1.0.0] - 2025-09-16
 ### Added
