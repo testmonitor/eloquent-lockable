@@ -1,6 +1,6 @@
 <?php
 
-namespace TestMonitor\Lockable\Test;
+namespace TestMonitor\Lockable\Tests;
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Application;
