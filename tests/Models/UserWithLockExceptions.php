@@ -1,6 +1,6 @@
 <?php
 
-namespace TestMonitor\Lockable\Test\Models;
+namespace TestMonitor\Lockable\Tests\Models;
 
 class UserWithLockExceptions extends User
 {
